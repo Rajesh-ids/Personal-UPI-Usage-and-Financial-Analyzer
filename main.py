@@ -8,7 +8,7 @@ import google.generativeai as genai
 
 
 # Set up Google Gemini API Key
-GEMINI_API_KEY = "Enter your actual API key"
+GEMINI_API_KEY = "Enter Your API key"
 genai.configure(api_key=GEMINI_API_KEY)
 
 # Streamlit UI setup
@@ -33,7 +33,7 @@ page_bg_img = f"""
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);  /* black with 40% opacity */
+    background-color: rgba(0, 0, 0, 0.8);  /* black with 40% opacity */
     z-index: 0;
 }}
 
@@ -47,7 +47,65 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 
 
 # Main title
-st.markdown('<h1 style="text-align:center; color:red;">🤖 AI-Powered Personal Finance Assistant 💡</h1>', unsafe_allow_html=True)
+st.markdown('''
+<style>
+@keyframes glow {
+    0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000; }
+    20% { text-shadow: 0 0 10px #ff8c00, 0 0 20px #ff8c00, 0 0 30px #ff8c00; }
+    40% { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700; }
+    60% { text-shadow: 0 0 10px #32cd32, 0 0 20px #32cd32, 0 0 30px #32cd32; }
+    80% { text-shadow: 0 0 10px #1e90ff, 0 0 20px #1e90ff, 0 0 30px #1e90ff; }
+    100% { text-shadow: 0 0 10px #8a2be2, 0 0 20px #8a2be2, 0 0 30px #8a2be2; }
+}
+
+@keyframes slideIn {
+    0% { transform: translateY(-50px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.animated-header {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 20px 0;
+    animation: slideIn 1s ease-out;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+}
+
+.animated-header .text-part {
+    background: linear-gradient(45deg, #ff0000, #ff8c00, #ffd700, #32cd32, #1e90ff, #8a2be2);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: glow 3s ease-in-out infinite, gradientShift 4s ease infinite;
+    -webkit-text-stroke: 1px black;
+    text-stroke: 1px black;
+}
+
+.animated-header .emoji {
+    color: initial;
+    -webkit-text-fill-color: initial;
+    background: none;
+    text-shadow: none;
+    filter: none;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+</style>
+
+<h1 class="animated-header">
+<span class="emoji">🤖</span> 
+<span class="text-part">AI-Powered Personal Finance Assistant</span> 
+<span class="emoji">💡</span>
+</h1>
+''', unsafe_allow_html=True)
+
+#Sub Title 
 st.markdown('<p style="text-align:center; color:yellow;">Upload your UPI Transaction History PDF for smart financial insights</p>', unsafe_allow_html=True)
 
 # Upload PDF
@@ -128,6 +186,9 @@ def build_financial_prompt(transaction_text: str) -> str:
 
         **💡 Personalized Financial Advice:**
         - Offer clear and actionable advice to the user on how to better manage their money based on the insights above. Include tips for saving more, avoiding unnecessary spending, or optimizing budget categories.
+
+        Set the subheading font size to 4 and the body text size to 3. Highlight the subheadings in #00e600 color code.
+    
     """)
 
 # Function to call Gemini API with retry logic
